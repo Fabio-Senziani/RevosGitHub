@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <script src="LibJavascript/Jquery/1.10.1/jquery-1.10.1.min.js"></script>	
+<SCRIPT>
+
+        var model;
+		var subscription;
+		
+        function nextValue() {
+            var newValue = model.counterValue() + 1;
+            model.counterValue(newValue);
+        }
+		
+        $(function () {
+				try{
+					model = window.dialogArguments.model
+					ko = window.dialogArguments.ko				
+				} catch(e){
+					model = top.opener.model
+					ko = top.opener.ko
+				}
+				ko.applyBindings(model, document.body)
+				
+/*
+//IN ORDER TO MAKE KO CORRECTLY WORKING: UNCOMMENT THIS BLOCK AND THE INPUT TAG BELOW; COMMENT THE INPUT TAG CONTAINING data-bind="value: counterValue" 
+$(window).bind('load', function() {
+	$('#counterText1').val(model.counterValue())
+	subscription = model.counterValue.subscribe(function(newValue) {
+		$('#counterText1').val(newValue)
+	});	
+});
+$(window).bind('beforeunload', function() {
+	subscription.dispose();
+});
+*/
+        });		
+</SCRIPT>
+</head>
+<body>
+    <div id="main" style="margin: 20px; font-weight: bold">
+        Counter example. NEWWINDOW!
+    </div>
+    <div style="margin: 20px" class="liveExample">
+        <input type="button" value="Next" onclick="nextValue()" />
+        <input id="counterText1" type="text" style="text-align: right" data-bind="value: counterValue" disabled="true" />
+        <!--<input id="counterText1" type="text" style="text-align: right" disabled="true" />-->	
+		<input id="NWO1" type="button" value="NEW WIN OPEN" data-bind="click: newwindow" />	
+		<input id="NMD1" type="button" value="NEW MOD DIALOG" data-bind="click: modaldialog" />
+    </div>
+</body>
+</html>
