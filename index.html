@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="LibJavascript/Jquery/1.10.1/jquery-1.10.1.min.js"></script>	
+    <!--<script type="text/javascript" src="LibJavascript/knockout/knockout-2.1.0rc2.js"></script>	-->
+	<script type="text/javascript" src="LibJavascript/knockout/knockout-2.3.0.js"></script>
+	<!--<script type="text/javascript" src="LibJavascript/knockout/knockout-3.0.0beta.js"></script>-->
+	
+    <script language="javascript">
+        $(function () {	
+			var viewModel = function (value) {
+								var self = this;
+								self.counterValue = ko.observable(value);
+
+								self.Next2 = function () {
+									var newValue = parseInt(self.counterValue(), 10) + 1;
+									self.counterValue(newValue);
+								}
+								
+								self.newwindow = function () {							
+									retval = window.open('newwin.html','','height=400,width=350,scrollable=yes');									 
+								}								
+
+								self.modaldialog = function () {
+									var obj = new Object;
+									obj.ko = ko
+									obj.model = model								
+									retval = window.showModalDialog('newwin.html', obj, "dialogHeight: 250px; dialogWidth: 300px; dialogTop: 150px; dialogLeft: 150px; edge: Raised; center: Yes; resizable: Yes; status: Yes;");									
+								}									
+							};
+
+			model = new viewModel(0);	
+			
+			ko.applyBindings(model);
+	
+        });
+			
+        function nextValue() {
+            model.Next2();
+        }
+	
+    </script>
+    <title>Knockout and new windows: Counter example</title>
+</head>
+	<body>
+	<div>
+        <input type="button" value="Next" onclick="nextValue()" />		
+        <input id="counterText" type="text" style="text-align: right" data-bind="value: counterValue" disabled="true" />	
+		<input id="NWO" type="button" value="NEW WIN OPEN" data-bind="click: newwindow" />
+		<input id="NMD" type="button" value="NEW MOD DIALOG" data-bind="click: modaldialog" />		
+	</div>
+	</body>
+</html>
